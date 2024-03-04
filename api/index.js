@@ -95,7 +95,7 @@ app.get(
 );
 
 app.get(
-    CALL_BACK_URL,
+    "/auth/google/callback",
     passport.authenticate("google", {
         failureRedirect: `${FRONTEND_URL}/login`,
         successRedirect: `${FRONTEND_URL}/dashboard`,
