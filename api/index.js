@@ -76,6 +76,18 @@ passport.deserializeUser((user, done) => {
     done(null, user);
 });
 
+// root url
+app.get("/", (req, res) => {
+    res.json({
+        CLIENT_ID,
+        CLIENT_SECRET,
+        PORT,
+        FRONTEND_URL,
+        CALL_BACK_URL,
+        MESSAGE: `server start at port no ${PORT}`,
+    });
+});
+
 // initial google ouath login
 app.get(
     "/auth/google",
