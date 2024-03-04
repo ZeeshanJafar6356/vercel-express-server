@@ -1,18 +1,18 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-require("./db/conn");
+require("../db/conn");
 const session = require("express-session");
 const passport = require("passport");
 const OAuth2Strategy = require("passport-google-oauth2").Strategy;
-const userdb = require("./model/userSchema");
+const userdb = require("../model/userSchema");
 const {
     CLIENT_ID,
     CLIENT_SECRET,
     PORT,
     FRONTEND_URL,
     CALL_BACK_URL,
-} = require("./config");
+} = require("../config");
 
 app.use(
     cors({
