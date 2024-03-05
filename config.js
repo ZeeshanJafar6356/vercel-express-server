@@ -2,8 +2,7 @@ require("dotenv").config();
 
 const PORT = process.env.PORT || 3000;
 
-const CALL_BACK_URL =
-    "https://vercel-express-server.vercel.app/auth/google/callback";
+const CALL_BACK_URL = process.env.CALL_BACK_URL;
 
 const DATABASE_URL = process.env.DATABASE_URL;
 

@@ -13,6 +13,7 @@ const {
     FRONTEND_URL,
     CALL_BACK_URL,
 } = require("../config");
+const firebaseAdmin = require("../config/firebase");
 
 app.use(
     cors({
@@ -117,6 +118,34 @@ app.get("/logout", (req, res, next) => {
         }
         res.redirect(FRONTEND_URL);
     });
+});
+
+// /auth/firebase/google
+
+app.post("/auth/firebase/google", async (req, res) => {
+    const decodedUser = await firebaseAdmin.auth().verifyIdToken(token);
+
+    if (decodedUser) {
+        const user = await userdb.findOne({ email: decodedUser.email });
+
+        if (user) {
+            res.status(200).json({ message: "user Login", user });
+        } else {
+            // create user
+            const newUser = new userdb({
+                googleId: decodedUser.uid,
+                displayName: decodedUser.name,
+                email: decodedUser.email,
+                image: decodedUser.picture,
+            });
+
+            await newUser.save();
+
+            res.status(200).json({ message: "user Login", user: newUser });
+        }
+    } else {
+        res.status(400).json({ message: "Not Authorized" });
+    }
 });
 
 app.listen(PORT, () => {
